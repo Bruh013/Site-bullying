@@ -160,7 +160,7 @@ export default function BullyingExperience() {
 
   useEffect(() => {
     if (screen === "chat" && !chatChoice) {
-      const t = setTimeout(() => setShowChatOptions(true), 3500);
+      const t = setTimeout(() => setShowChatOptions(true), 4500);
       return () => clearTimeout(t);
     }
   }, [screen, chatChoice]);
