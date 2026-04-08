@@ -260,8 +260,9 @@ export default function BullyingExperience() {
             </FadeText>
 
             <div className="flex flex-col gap-3 flex-1">
-              <ChatBubble text="mano olha esse cara kkkkk" delay={800} />
-              <ChatBubble text="ridículo 😂" delay={2200} />
+              <ChatBubble text="olha a foto desse mlk kkkkkk q nojo" delay={800} />
+              <ChatBubble text="cara ele é muito feio, coitado 😂😂" delay={2200} />
+              <ChatBubble text="vou mandar no grupo da sala pra todo mundo ver" delay={3000} />
 
               {showChatOptions && !chatChoice && (
                 <FadeText delay={0} className="mt-6 flex flex-col gap-2 self-end">
@@ -289,9 +290,12 @@ export default function BullyingExperience() {
 
               {chatChoice === "zoar" && (
                 <>
-                  <ChatBubble text="kkkkk manda mais 😂" delay={0} self />
+                  <ChatBubble text="KKKKK manda a foto, quero ver 😂" delay={0} self />
                   {showAfterChat && (
-                    <ChatBubble text="KKKK isso aí, continua" delay={300} />
+                    <>
+                      <ChatBubble text="boa kkk vou fazer meme dele" delay={300} />
+                      <ChatBubble text="esse cara vai chorar amanhã 💀" delay={1200} />
+                    </>
                   )}
                 </>
               )}
@@ -299,11 +303,9 @@ export default function BullyingExperience() {
                 <>
                   {showAfterChat && (
                     <>
-                      <ChatBubble text="ué, ficou mudo?" delay={300} />
-                      <ChatBubble
-                        text="deixa quieto, ele concorda kkk"
-                        delay={1200}
-                      />
+                      <ChatBubble text="ué, não vai falar nada?" delay={300} />
+                      <ChatBubble text="silêncio = concordou kkkk" delay={1200} />
+                      <ChatBubble text="pronto, mandei no grupo da sala 😂" delay={2000} />
                     </>
                   )}
                 </>
@@ -311,18 +313,18 @@ export default function BullyingExperience() {
               {chatChoice === "defender" && (
                 <>
                   <ChatBubble
-                    text="para com isso, não tem graça"
+                    text="para com isso, isso é pesado demais"
                     delay={0}
                     self
                   />
                   {showAfterChat && (
                     <>
                       <ChatBubble
-                        text="relaxa, é só brincadeira"
+                        text="relaxa, tá defendendo por quê? é teu namorado? 😂"
                         delay={300}
                       />
                       <ChatBubble
-                        text="vai defender agora? kk"
+                        text="vou mandar mesmo, ngm liga"
                         delay={1200}
                       />
                     </>
