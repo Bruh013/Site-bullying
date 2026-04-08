@@ -6,31 +6,31 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 92%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 92%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 92%;
-    --primary: 0 0% 92%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 80%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 0 0% 18%;
-    --accent-foreground: 0 0% 92%;
+    --background: 216 50% 5%;
+    --foreground: 210 40% 96%;
+    --card: 215 45% 9%;
+    --card-foreground: 210 40% 96%;
+    --popover: 215 45% 9%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 213 80% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 40% 14%;
+    --secondary-foreground: 210 30% 80%;
+    --muted: 215 35% 16%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 215 45% 20%;
+    --accent-foreground: 210 40% 96%;
     --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 92%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 30% 18%;
+    --input: 215 30% 18%;
+    --ring: 213 80% 55%;
     --radius: 0.75rem;
 
-    --chat-bubble-other: 0 0% 14%;
-    --chat-bubble-self: 210 60% 35%;
-    --text-dim: 0 0% 45%;
-    --text-accent: 0 0% 70%;
+    --chat-bubble-other: 215 40% 15%;
+    --chat-bubble-self: 213 80% 40%;
+    --text-dim: 215 20% 50%;
+    --text-accent: 213 50% 70%;
   }
 }
 
