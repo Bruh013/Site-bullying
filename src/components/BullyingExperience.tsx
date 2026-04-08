@@ -1,4 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
+import verbalImg from "@/assets/verbal-bullying.jpg";
+import cyberImg from "@/assets/cyberbullying-phone.jpg";
+import exclusionImg from "@/assets/exclusion.jpg";
+import physicalImg from "@/assets/physical-shadow.jpg";
+import impactImg from "@/assets/impact-message.jpg";
+import lonelyImg from "@/assets/lonely-bench.jpg";
 
 type Screen =
   | "intro"
@@ -13,7 +19,6 @@ type Screen =
 type ChatChoice = "zoar" | "ignorar" | "defender" | null;
 type IdentityChoice = "bully" | "victim" | "witness" | null;
 
-// Reusable animated text component
 const FadeText = ({
   children,
   delay = 0,
@@ -40,7 +45,6 @@ const FadeText = ({
   );
 };
 
-// Chat bubble
 const ChatBubble = ({
   text,
   delay,
@@ -71,6 +75,73 @@ const ChatBubble = ({
   );
 };
 
+const TypeCard = ({
+  label,
+  desc,
+  detail,
+  image,
+  delay,
+}: {
+  label: string;
+  desc: string;
+  detail: string;
+  image: string;
+  delay: number;
+}) => {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <FadeText delay={delay} className="w-full">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left group"
+      >
+        <div className="flex items-center gap-3 py-3 px-4 rounded-xl border border-border/50 hover:border-border transition-colors">
+          <img
+            src={image}
+            alt={label}
+            loading="lazy"
+            width={56}
+            height={56}
+            className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <p className="text-base font-medium">{label}</p>
+            <p className="text-sm text-dim">{desc}</p>
+          </div>
+          <span
+            className={`text-dim text-lg transition-transform duration-300 ${
+              expanded ? "rotate-180" : ""
+            }`}
+          >
+            ▾
+          </span>
+        </div>
+      </button>
+
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          expanded ? "max-h-80 opacity-100 mt-2" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="rounded-xl border border-border/30 bg-card overflow-hidden">
+          <img
+            src={image}
+            alt={label}
+            loading="lazy"
+            width={800}
+            height={512}
+            className="w-full h-36 object-cover opacity-70"
+          />
+          <div className="p-4">
+            <p className="text-sm text-foreground/80 leading-relaxed">{detail}</p>
+          </div>
+        </div>
+      </div>
+    </FadeText>
+  );
+};
+
 export default function BullyingExperience() {
   const [screen, setScreen] = useState<Screen>("intro");
   const [transitioning, setTransitioning] = useState(false);
@@ -87,7 +158,6 @@ export default function BullyingExperience() {
     }, 600);
   }, []);
 
-  // Show chat options after messages appear
   useEffect(() => {
     if (screen === "chat" && !chatChoice) {
       const t = setTimeout(() => setShowChatOptions(true), 3500);
@@ -95,7 +165,6 @@ export default function BullyingExperience() {
     }
   }, [screen, chatChoice]);
 
-  // Show after-choice messages
   useEffect(() => {
     if (chatChoice) {
       const t = setTimeout(() => setShowAfterChat(true), 800);
@@ -103,7 +172,6 @@ export default function BullyingExperience() {
     }
   }, [chatChoice]);
 
-  // Auto-advance from after-chat
   useEffect(() => {
     if (showAfterChat) {
       const t = setTimeout(() => goTo("reveal"), 3000);
@@ -111,7 +179,43 @@ export default function BullyingExperience() {
     }
   }, [showAfterChat, goTo]);
 
-  const choiceLabel = chatChoice === "zoar" ? "zoar" : chatChoice === "ignorar" ? "ignorar" : "defender";
+  const choiceLabel =
+    chatChoice === "zoar"
+      ? "zoar"
+      : chatChoice === "ignorar"
+      ? "ignorar"
+      : "defender";
+
+  const bullyingTypes = [
+    {
+      label: "Verbal",
+      desc: "apelidos, zoações, humilhação",
+      detail:
+        "Bullying verbal inclui xingamentos, apelidos maldosos, comentários depreciativos e humilhação pública. Palavras deixam marcas profundas na autoestima e na saúde mental da vítima, mesmo quando disfarçadas de 'brincadeira'.",
+      image: verbalImg,
+    },
+    {
+      label: "Cyberbullying",
+      desc: "mensagens, comentários, exposição online",
+      detail:
+        "O cyberbullying acontece em redes sociais, mensagens e plataformas online. A vítima é perseguida 24 horas por dia, sem descanso. Prints, montagens e exposição pública amplificam o sofrimento de forma devastadora.",
+      image: cyberImg,
+    },
+    {
+      label: "Exclusão",
+      desc: "ignorar, deixar de fora",
+      detail:
+        "A exclusão social é uma forma silenciosa mas extremamente dolorosa de bullying. Ser ignorado, excluído de grupos e atividades causa isolamento profundo e sentimento de rejeição que pode durar anos.",
+      image: exclusionImg,
+    },
+    {
+      label: "Físico",
+      desc: "agressões, empurrões, intimidação",
+      detail:
+        "O bullying físico envolve qualquer forma de agressão corporal: empurrões, socos, chutes e intimidação física. Além das marcas visíveis, deixa traumas emocionais profundos e medo constante.",
+      image: physicalImg,
+    },
+  ];
 
   const renderScreen = () => {
     switch (screen) {
@@ -125,11 +229,20 @@ export default function BullyingExperience() {
                 <span className="font-semibold">fez bullying?</span>
               </h1>
             </FadeText>
-            <FadeText delay={1200}>
+            <FadeText delay={1000}>
+              <img
+                src={lonelyImg}
+                alt="Solidão"
+                width={800}
+                height={512}
+                className="w-64 sm:w-80 rounded-2xl opacity-60 mx-auto"
+              />
+            </FadeText>
+            <FadeText delay={1500}>
               <button
                 onClick={() => goTo("chat")}
-                className="px-8 py-3 rounded-full border border-foreground/20 text-sm font-medium tracking-wide
-                  hover:bg-foreground/10 transition-all duration-300 text-accent-soft hover:text-foreground"
+                className="px-8 py-3 rounded-full border border-border text-sm font-medium tracking-wide
+                  hover:bg-accent transition-all duration-300 text-accent-soft hover:text-foreground"
               >
                 Continuar
               </button>
@@ -141,7 +254,9 @@ export default function BullyingExperience() {
         return (
           <div className="flex flex-col min-h-screen px-4 sm:px-6 py-12 max-w-md mx-auto">
             <FadeText delay={200} className="mb-6">
-              <p className="text-xs text-dim tracking-widest uppercase">Grupo — 3 membros</p>
+              <p className="text-xs text-dim tracking-widest uppercase">
+                Grupo — 3 membros
+              </p>
             </FadeText>
 
             <div className="flex flex-col gap-3 flex-1">
@@ -150,26 +265,34 @@ export default function BullyingExperience() {
 
               {showChatOptions && !chatChoice && (
                 <FadeText delay={0} className="mt-6 flex flex-col gap-2 self-end">
-                  {(["zoar", "ignorar", "defender"] as ChatChoice[]).map((c) => (
-                    <button
-                      key={c}
-                      onClick={() => {
-                        setChatChoice(c);
-                        setShowChatOptions(false);
-                      }}
-                      className="px-5 py-2 rounded-full border border-foreground/20 text-sm
-                        hover:bg-foreground/10 transition-all duration-200 capitalize text-accent-soft hover:text-foreground"
-                    >
-                      {c === "zoar" ? "😂 Zoar" : c === "ignorar" ? "😶 Ignorar" : "🛡️ Defender"}
-                    </button>
-                  ))}
+                  {(["zoar", "ignorar", "defender"] as ChatChoice[]).map(
+                    (c) => (
+                      <button
+                        key={c}
+                        onClick={() => {
+                          setChatChoice(c);
+                          setShowChatOptions(false);
+                        }}
+                        className="px-5 py-2 rounded-full border border-border text-sm
+                          hover:bg-accent transition-all duration-200 capitalize text-accent-soft hover:text-foreground"
+                      >
+                        {c === "zoar"
+                          ? "😂 Zoar"
+                          : c === "ignorar"
+                          ? "😶 Ignorar"
+                          : "🛡️ Defender"}
+                      </button>
+                    )
+                  )}
                 </FadeText>
               )}
 
               {chatChoice === "zoar" && (
                 <>
                   <ChatBubble text="kkkkk manda mais 😂" delay={0} self />
-                  {showAfterChat && <ChatBubble text="KKKK isso aí, continua" delay={300} />}
+                  {showAfterChat && (
+                    <ChatBubble text="KKKK isso aí, continua" delay={300} />
+                  )}
                 </>
               )}
               {chatChoice === "ignorar" && (
@@ -177,18 +300,31 @@ export default function BullyingExperience() {
                   {showAfterChat && (
                     <>
                       <ChatBubble text="ué, ficou mudo?" delay={300} />
-                      <ChatBubble text="deixa quieto, ele concorda kkk" delay={1200} />
+                      <ChatBubble
+                        text="deixa quieto, ele concorda kkk"
+                        delay={1200}
+                      />
                     </>
                   )}
                 </>
               )}
               {chatChoice === "defender" && (
                 <>
-                  <ChatBubble text="para com isso, não tem graça" delay={0} self />
+                  <ChatBubble
+                    text="para com isso, não tem graça"
+                    delay={0}
+                    self
+                  />
                   {showAfterChat && (
                     <>
-                      <ChatBubble text="relaxa, é só brincadeira" delay={300} />
-                      <ChatBubble text="vai defender agora? kk" delay={1200} />
+                      <ChatBubble
+                        text="relaxa, é só brincadeira"
+                        delay={300}
+                      />
+                      <ChatBubble
+                        text="vai defender agora? kk"
+                        delay={1200}
+                      />
                     </>
                   )}
                 </>
@@ -213,8 +349,8 @@ export default function BullyingExperience() {
             <FadeText delay={4500}>
               <button
                 onClick={() => goTo("impact")}
-                className="mt-8 px-8 py-3 rounded-full border border-foreground/20 text-sm
-                  hover:bg-foreground/10 transition-all duration-300 text-accent-soft hover:text-foreground"
+                className="mt-8 px-8 py-3 rounded-full border border-border text-sm
+                  hover:bg-accent transition-all duration-300 text-accent-soft hover:text-foreground"
               >
                 Continuar
               </button>
@@ -226,18 +362,28 @@ export default function BullyingExperience() {
         return (
           <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center gap-4">
             <FadeText delay={500}>
+              <img
+                src={impactImg}
+                alt="Impacto das mensagens"
+                loading="lazy"
+                width={800}
+                height={512}
+                className="w-72 sm:w-96 rounded-2xl opacity-50 mx-auto"
+              />
+            </FadeText>
+            <FadeText delay={1200}>
               <p className="text-2xl sm:text-4xl font-light leading-relaxed">
                 Uma mensagem pode ficar
               </p>
             </FadeText>
-            <FadeText delay={2000}>
+            <FadeText delay={2500}>
               <p className="text-3xl sm:text-5xl font-bold">pra sempre.</p>
             </FadeText>
             <FadeText delay={4000}>
               <button
                 onClick={() => goTo("types")}
-                className="mt-10 px-8 py-3 rounded-full border border-foreground/20 text-sm
-                  hover:bg-foreground/10 transition-all duration-300 text-accent-soft hover:text-foreground"
+                className="mt-10 px-8 py-3 rounded-full border border-border text-sm
+                  hover:bg-accent transition-all duration-300 text-accent-soft hover:text-foreground"
               >
                 Continuar
               </button>
@@ -247,34 +393,35 @@ export default function BullyingExperience() {
 
       case "types":
         return (
-          <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center max-w-lg mx-auto">
+          <div className="flex flex-col items-center justify-center min-h-screen px-6 py-12 text-center max-w-lg mx-auto">
             <FadeText delay={300}>
-              <h2 className="text-2xl sm:text-3xl font-semibold mb-10">
+              <h2 className="text-2xl sm:text-3xl font-semibold mb-8">
                 Nem todo bullying parece bullying
               </h2>
             </FadeText>
 
-            {[
-              { label: "Verbal", desc: "apelidos, zoações, humilhação" },
-              { label: "Cyberbullying", desc: "mensagens, comentários, exposição online" },
-              { label: "Exclusão", desc: "ignorar, deixar de fora" },
-              { label: "Físico", desc: "agressões" },
-            ].map((item, i) => (
-              <FadeText key={item.label} delay={1000 + i * 800} className="mb-6">
-                <p className="text-lg font-medium">{item.label}</p>
-                <p className="text-sm text-dim">{item.desc}</p>
-              </FadeText>
-            ))}
+            <div className="w-full flex flex-col gap-3 mb-8">
+              {bullyingTypes.map((item, i) => (
+                <TypeCard
+                  key={item.label}
+                  label={item.label}
+                  desc={item.desc}
+                  detail={item.detail}
+                  image={item.image}
+                  delay={800 + i * 600}
+                />
+              ))}
+            </div>
 
-            <FadeText delay={4500}>
-              <p className="text-xl font-semibold mt-4">Mas sempre machuca.</p>
+            <FadeText delay={3500}>
+              <p className="text-xl font-semibold mt-2">Mas sempre machuca.</p>
             </FadeText>
 
-            <FadeText delay={5500}>
+            <FadeText delay={4500}>
               <button
                 onClick={() => goTo("identity")}
-                className="mt-10 px-8 py-3 rounded-full border border-foreground/20 text-sm
-                  hover:bg-foreground/10 transition-all duration-300 text-accent-soft hover:text-foreground"
+                className="mt-10 px-8 py-3 rounded-full border border-border text-sm
+                  hover:bg-accent transition-all duration-300 text-accent-soft hover:text-foreground"
               >
                 Continuar
               </button>
@@ -291,19 +438,21 @@ export default function BullyingExperience() {
               </h2>
             </FadeText>
             <FadeText delay={1200} className="flex flex-col gap-3">
-              {([
-                { key: "bully" as IdentityChoice, label: "Já fiz isso" },
-                { key: "victim" as IdentityChoice, label: "Já passei por isso" },
-                { key: "witness" as IdentityChoice, label: "Já vi isso acontecer" },
-              ]).map((item) => (
+              {(
+                [
+                  { key: "bully" as IdentityChoice, label: "Já fiz isso" },
+                  { key: "victim" as IdentityChoice, label: "Já passei por isso" },
+                  { key: "witness" as IdentityChoice, label: "Já vi isso acontecer" },
+                ] as const
+              ).map((item) => (
                 <button
                   key={item.key}
                   onClick={() => {
                     setIdentityChoice(item.key);
                     goTo("path");
                   }}
-                  className="px-8 py-3 rounded-full border border-foreground/20 text-sm
-                    hover:bg-foreground/10 transition-all duration-300 text-accent-soft hover:text-foreground"
+                  className="px-8 py-3 rounded-full border border-border text-sm
+                    hover:bg-accent transition-all duration-300 text-accent-soft hover:text-foreground"
                 >
                   {item.label}
                 </button>
@@ -312,7 +461,7 @@ export default function BullyingExperience() {
           </div>
         );
 
-      case "path":
+      case "path": {
         const paths = {
           bully: {
             lines: ["Você não é um monstro.", "Mas isso precisa mudar."],
@@ -360,20 +509,23 @@ export default function BullyingExperience() {
             </div>
 
             <FadeText delay={4500}>
-              <p className="text-xl sm:text-2xl font-semibold mt-10">{p.closing}</p>
+              <p className="text-xl sm:text-2xl font-semibold mt-10">
+                {p.closing}
+              </p>
             </FadeText>
 
             <FadeText delay={5500}>
               <button
                 onClick={() => goTo("final")}
-                className="mt-10 px-8 py-3 rounded-full border border-foreground/20 text-sm
-                  hover:bg-foreground/10 transition-all duration-300 text-accent-soft hover:text-foreground"
+                className="mt-10 px-8 py-3 rounded-full border border-border text-sm
+                  hover:bg-accent transition-all duration-300 text-accent-soft hover:text-foreground"
               >
                 Continuar
               </button>
             </FadeText>
           </div>
         );
+      }
 
       case "final":
         return (
@@ -402,7 +554,10 @@ export default function BullyingExperience() {
               <button
                 onClick={() => {
                   if (navigator.share) {
-                    navigator.share({ title: "Bullying não é brincadeira", url: window.location.href });
+                    navigator.share({
+                      title: "Bullying não é brincadeira",
+                      url: window.location.href,
+                    });
                   } else {
                     navigator.clipboard.writeText(window.location.href);
                   }
@@ -420,8 +575,8 @@ export default function BullyingExperience() {
                   setShowAfterChat(false);
                   goTo("intro");
                 }}
-                className="px-8 py-3 rounded-full border border-foreground/20 text-sm
-                  hover:bg-foreground/10 transition-all duration-300 text-accent-soft hover:text-foreground"
+                className="px-8 py-3 rounded-full border border-border text-sm
+                  hover:bg-accent transition-all duration-300 text-accent-soft hover:text-foreground"
               >
                 Refazer
               </button>
